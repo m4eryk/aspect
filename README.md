@@ -1,0 +1,1 @@
+# aspect paradigm simple exampel
