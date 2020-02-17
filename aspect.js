@@ -36,13 +36,13 @@ const MyJson = {
     parse: (firstUserJson, User) => {
         const userJSON = JSON.parse(firstUserJson);
         const newUser = new User();
-    
+
         User[MAPPING_ASPECT].forEach(aspect => aspect.parse ?
             newUser[aspect.key] = aspect.parse(userJSON[aspect.data])
             :
             newUser[aspect.key] = userJSON[aspect.data]
         );
-    
+
         return newUser;
     },
     stringify: (user) => {
@@ -53,54 +53,54 @@ const MyJson = {
             :
             stringifyUser[aspect.data] = user[aspect.key]
         );
-    
+
         return JSON.stringify(stringifyUser);
     },
-}
+};
 
 const Csv = {
     parse: (firstUsersCsv, User) => {
         const resultUsers = [];
         const csvLines = firstUsersCsv.split('\n');
-        
+
         const headers = csvLines[0].split(',');
-    
-        for(let i = 1; i < csvLines.length; i++) {
-      
+
+        for (let i = 1; i < csvLines.length; i++) {
+
             const csvUser = {};
             var currentline = csvLines[i].split(',');
-      
-            for(let j = 0 ; j < headers.length; j++) {
+
+            for (let j = 0; j < headers.length; j++) {
                 csvUser[headers[j]] = currentline[j];
             }
-      
+
             resultUsers.push(MyJson.parse(csvUser, User));
-      
+
         }
-    
+
         return resultUsers;
     },
     stringify: (users) => {
         const headers = JSON.parse(MyJson.stringify(users[0]));
         let str = Object.keys(headers).join(',');
-    
+
         for (let i = 0; i < users.length; i++) {
             let line = '';
 
             for (let index in users[i]) {
-                if (line != '') {
+                if (line !== '') {
                     line += ',';
-                } 
-    
+                }
+
                 line += users[i][index];
             }
-    
+
             str += line + '\r\n';
         }
-    
+
         return str;
     }
-}
+};
 
 const firstUserJson = `
 {
@@ -108,7 +108,7 @@ const firstUserJson = `
     "USER_AGE": "27",
     "USER_INFO": "some info"
 }
-`
+`;
 
 const firstUser = MyJson.parse(firstUserJson, User);
 
@@ -153,7 +153,7 @@ const users = Csv.parse(firstUsersCsv, User);
             other: 'other info =)'
         }
     ]
-    
+
 */
 
 const resultUsersCsv = Csv.stringify(users);
