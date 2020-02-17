@@ -68,7 +68,7 @@ const Csv = {
         for (let i = 1; i < csvLines.length; i++) {
 
             const csvUser = {};
-            var currentline = csvLines[i].split(',');
+            let currentline = csvLines[i].split(',');
 
             for (let j = 0; j < headers.length; j++) {
                 csvUser[headers[j]] = currentline[j];
